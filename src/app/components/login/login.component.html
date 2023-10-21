@@ -1,0 +1,23 @@
+<div class="bg">
+</div>
+<div class="login">
+    <h1 class="login-title">Login with admin</h1>
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your username@gmail.com!">
+                <nz-input-group class="h-50-px" nzPrefixIcon="user">
+                    <input type="text" nz-input formControlName="email" placeholder="Username" />
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Password!">
+                <nz-input-group class="h-50-px" nzPrefixIcon="lock">
+                    <input type="password" nz-input formControlName="password" placeholder="Password" />
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <span class="error">{{errorText}}</span>
+        <button nz-button class="login-form-button login-form-margin h-50-px" [nzType]="'primary'">Log in</button>
+    </form>
+</div>
