@@ -1,9 +1,30 @@
 <p>
-    <mat-toolbar color="primary">
-        <span>Admin manage</span>
-        <span class="example-spacer"></span>
-        <button mat-raised-button (click)="openAddEditEmpForm()">
-            Add product
-        </button>
-    </mat-toolbar>
+  <mat-toolbar color="primary">
+    <span>Admin manage</span>
+    <span class="example-spacer"></span>
+    <button
+      class="mr-5"
+      mat-raised-button
+      (click)="openAddEditEmpForm('product')"
+    >
+      Add product
+    </button>
+    <button
+      class="mr-5"
+      mat-raised-button
+      (click)="openAddEditEmpForm('category')"
+    >
+      Add category
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon logout-icon"
+      (click)="logOutAccount()"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon supervised_user_circle-icon">
+      <mat-icon>supervised_user_circle</mat-icon>
+    </button>
+  </mat-toolbar>
 </p>

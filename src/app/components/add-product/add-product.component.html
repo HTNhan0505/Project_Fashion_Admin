@@ -1,39 +1,137 @@
 <div mat-dialog-title>
-    <h1>Product Form</h1>
+  <h1>Product Form</h1>
 </div>
 <form [formGroup]="empForm" (ngSubmit)="onFormSubmit()">
-    <div mat-dialog-content class="content">
-        <div class="row">
-            <mat-form-field appearance="outline">
-                <mat-label>Product name</mat-label>
-                <input matInput type="text" placeholder="Quần , áo ..." formControlName="productName">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Detail</mat-label>
-                <textarea matInput placeholder="Mô tả sản phẩm" formControlName="detail"></textarea>
-            </mat-form-field>
-        </div>
-
-        <div class="row">
-            <mat-form-field floatLabel="always" appearance="outline">
-                <mat-label>Price</mat-label>
-                <input matInput type="number" class="example-right-align" placeholder="Nhập số" formControlName="price">
-                <span matTextPrefix>VNĐ&nbsp;</span>
-            </mat-form-field>
-
-            <mat-form-field floatLabel="always" appearance="outline">
-                <mat-label>Quantity</mat-label>
-                <input matInput type="number" class="example-right-align" placeholder="Nhập số"
-                    formControlName="quantity">
-                <span matTextPrefix>&nbsp;</span>
-            </mat-form-field>
-
-        </div>
-
-
+  <div mat-dialog-content class="content">
+    <!-- Product Name & detail -->
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Product name</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Quần , áo ..."
+          formControlName="productName"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Detail</mat-label>
+        <textarea
+          matInput
+          placeholder="Mô tả sản phẩm"
+          formControlName="detail"
+        ></textarea>
+      </mat-form-field>
     </div>
-    <div mat-dialog-actions class="action">
-        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+
+    <!-- Gender -->
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="isMen">
+          <mat-option [value]="true"> Nam </mat-option>
+          <mat-option [value]="false"> Nữ </mat-option>
+          <mat-option [value]="-1"> Cả hai </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
+    <!-- Category -->
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Categories</mat-label>
+        <mat-select formControlName="categoryID">
+          <mat-option *ngFor="let value of category" [value]="value.id">
+            {{ value.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Price & quantity -->
+    <div class="row">
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>Price</mat-label>
+        <input
+          matInput
+          type="text"
+          class="example-right-align"
+          placeholder="Nhập số"
+          formControlName="price"
+          [(ngModel)]="empForm.value['price']"
+          (blur)="setPrice($event.target)"
+        />
+        <span matTextPrefix>VNĐ&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input
+          matInput
+          type="number"
+          class="example-right-align"
+          placeholder="Nhập số"
+          formControlName="quantity"
+        />
+        <span matTextPrefix>&nbsp;</span>
+      </mat-form-field>
+    </div>
+    <!-- Img -->
+    <div class="row">
+      <label
+        class="wrap-input-file"
+        for="fileupload"
+        nzTooltipTitle="Ảnh đầu tiên sẽ là ảnh đại diện sản phẩm"
+        nzTooltipPlacement="right"
+        nz-button
+        nz-tooltip
+      >
+        <input
+          type="file"
+          (change)="onchange($event)"
+          id="fileupload"
+          class="form__load-img"
+          accept="image/jpeg, image/png, image/jpg"
+          multiple
+        />
+        Add image
+        <mat-icon class="wrap-input-file--add">perm_media</mat-icon>
+      </label>
+    </div>
+    <!-- List Img -->
+
+    <div class="row g-0">
+      <nz-list nzGrid>
+        <div nz-row [nzGutter]="16">
+          <div
+            nz-col
+            style="margin-top: 20px"
+            [nzSpan]="6"
+            *ngFor="let item of image_list; let indexOf = index"
+          >
+            <nz-list-item class="product__item">
+              <img
+                *ngIf="item.src !== ''"
+                nz-image
+                width="100%"
+                height="100%"
+                style="object-fit: cover"
+                [nzSrc]="item.src"
+                alt=""
+              />
+              <div class="product__item-icon" (click)="deleteImage(indexOf)">
+                <mat-icon>delete_forever</mat-icon>
+              </div>
+            </nz-list-item>
+          </div>
+        </div>
+      </nz-list>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" type="submit">
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
 </form>

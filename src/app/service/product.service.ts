@@ -12,9 +12,12 @@ export class ProductService {
   public getToken() {
     return localStorage.getItem('token');
   }
+  public getRefeshToken() {
+    return localStorage.getItem('refeshToken');
+  }
 
   addProduct(data: any): Observable<any> {
-    return this._http.post('http://192.168.90.101:8000/admin/addproduct', data);
+    return this._http.post('http://localhost:3000/admin/addproduct', data);
   }
 
   updateEmployee(id: number, data: any): Observable<any> {

@@ -1,0 +1,24 @@
+.content {
+    padding-top: 10px;
+}
+.row {
+    display: flex;
+    gap: 10px;
+
+    mat-form-field {
+        width: 100%;
+    }
+}
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+}
+.action {
+    padding: 0px 25px 20px;
+    min-height: 70px;
+    button {
+        height: 100%;
+        flex: 1;
+        padding: 20px 30px;
+    }
+}

@@ -23,6 +23,7 @@ import { AntdModuleModule } from './antd-module.module';
 import { MaterialModule } from './material.module';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AuthInterceptor } from './service/auth.interceptor';
+import { AddCategoryComponent } from './components/add-category/add-category.component';
 
 
 
@@ -34,7 +35,8 @@ registerLocaleData(en);
     AppComponent,
     LoginComponent,
     HomeComponent,
-    AddProductComponent
+    AddProductComponent,
+    AddCategoryComponent
   ],
   imports: [
     BrowserModule,

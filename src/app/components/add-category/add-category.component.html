@@ -1,0 +1,46 @@
+<div mat-dialog-title>
+  <h1>Category Form</h1>
+</div>
+<form [formGroup]="empForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Category name</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Quần , áo ..."
+          formControlName="name"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Detail</mat-label>
+        <textarea
+          matInput
+          placeholder="Mô tả sản phẩm"
+          formControlName="detail"
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="isMen">
+          <mat-option [value]="true"> Nam </mat-option>
+          <mat-option [value]="false"> Nữ </mat-option>
+          <mat-option [value]="-1"> Cả hai </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" type="submit">
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
+</form>
