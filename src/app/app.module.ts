@@ -16,7 +16,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
 
-
 import { AntdModuleModule } from './antd-module.module';
 
 
@@ -47,7 +46,8 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     IconsProviderModule,
     AntdModuleModule,
-    MaterialModule
+    MaterialModule,
+
   ],
   providers: [
     {
@@ -55,7 +55,7 @@ registerLocaleData(en);
       useClass: AuthInterceptor,
       multi: true
     },
-    { provide: NZ_I18N, useValue: en_US }
+    { provide: NZ_I18N, useValue: en_US },
   ],
   bootstrap: [AppComponent]
 })

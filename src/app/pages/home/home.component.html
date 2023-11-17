@@ -2,6 +2,9 @@
   <mat-toolbar color="primary">
     <span>Admin manage</span>
     <span class="example-spacer"></span>
+    <button class="mr-5" mat-raised-button (click)="toggleTypeRender()">
+      {{ nameRender }}
+    </button>
     <button
       class="mr-5"
       mat-raised-button
@@ -28,3 +31,170 @@
     </button>
   </mat-toolbar>
 </p>
+<div *ngIf="nameRender == 'Category'" class="main-body">
+  <h1>Product</h1>
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Name, category , price , ..."
+      #input
+    />
+  </mat-form-field>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- STT -->
+      <ng-container matColumnDef="Product_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>STT</th>
+        <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+      <!-- IMG -->
+      <ng-container matColumnDef="listImage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+        <td mat-cell *matCellDef="let row" style="padding: 15px 0">
+          <img
+            style="object-fit: cover"
+            width="100px"
+            height="100px"
+            [src]="
+              row.listImage[0]
+                ? row.listImage[0]
+                : 'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg'
+            "
+          />
+        </td>
+      </ng-container>
+      <!-- Product Name -->
+      <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
+      </ng-container>
+      <!-- Product Detail -->
+      <ng-container matColumnDef="detail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Detail</th>
+        <td mat-cell *matCellDef="let row">{{ row.detail }}</td>
+      </ng-container>
+      <!-- Category Name -->
+      <ng-container matColumnDef="categoryName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let row">{{ row.categoryName }}</td>
+      </ng-container>
+      <!-- Price -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.price | currency : "VND" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</th>
+        <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="action">
+            <button mat-icon-button color="primary" (click)="openEditForm(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteProduct(row.Product_ID)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching</td>
+      </tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of users"
+    ></mat-paginator>
+  </div>
+</div>
+<!-- Category -->
+<div *ngIf="nameRender == 'Product'" class="main-body">
+  <h1>Category</h1>
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Name, Gender ..."
+      #input
+    />
+  </mat-form-field>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource2" matSort>
+      <!-- STT -->
+      <ng-container matColumnDef="categoryId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>STT</th>
+        <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="detail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Detail</th>
+        <td mat-cell *matCellDef="let row">{{ row.detail }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isMen">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+        <td mat-cell *matCellDef="let row">{{ row.isMen }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="action">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="openCategoryEditForm(row)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteProduct(row.categoryId)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching</td>
+      </tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of category"
+    ></mat-paginator>
+  </div>
+</div>

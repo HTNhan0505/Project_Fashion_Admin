@@ -19,16 +19,22 @@ export class ProductService {
   addProduct(data: any): Observable<any> {
     return this._http.post('http://localhost:3000/admin/addproduct', data);
   }
-
-  updateEmployee(id: number, data: any): Observable<any> {
-    return this._http.put(`http://localhost:3000/employees/${id}`, data);
+  addCategory(data: any): Observable<any> {
+    return this._http.post('http://localhost:3000/admin/addcategory', data);
+  }
+  getProductList(): Observable<any> {
+    return this._http.get('http://localhost:3000/admin/getlistproduct');
+  }
+  deleteProduct(id: any): Observable<any> {
+    return this._http.delete(`http://localhost:3000/admin/product/delete/${id}`);
+  }
+  getCategoryList(): Observable<any> {
+    return this._http.get('http://localhost:3000/admin/getcategory/list');
   }
 
-  getEmployeeList(): Observable<any> {
-    return this._http.get('http://192.168.90.101:8000/admin/getlistproduct');
+  updateProduct(id: any, data: any): Observable<any> {
+    return this._http.put(`http://localhost:3000/admin/product/update?${id}`, data);
   }
 
-  deleteEmployee(id: number): Observable<any> {
-    return this._http.delete(`http://localhost:3000/employees/${id}`);
-  }
+
 }

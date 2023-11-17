@@ -9,7 +9,7 @@
         <input
           matInput
           type="text"
-          placeholder="Quần , áo ..."
+          placeholder="Vải kaki ,..."
           formControlName="name"
         />
       </mat-form-field>
@@ -18,7 +18,7 @@
         <mat-label>Detail</mat-label>
         <textarea
           matInput
-          placeholder="Mô tả sản phẩm"
+          placeholder="Mô tả danh mục"
           formControlName="detail"
         ></textarea>
       </mat-form-field>
@@ -40,7 +40,13 @@
       Cancel
     </button>
     <button mat-raised-button color="primary" type="submit">
-      {{ data ? "Update" : "Save" }}
+      <mat-progress-spinner
+        style="width: 21px; height: 21px"
+        color="accent"
+        mode="indeterminate"
+        *ngIf="isLoading"
+      ></mat-progress-spinner>
+      {{ isLoading ? "" : "Save" }}
     </button>
   </div>
 </form>

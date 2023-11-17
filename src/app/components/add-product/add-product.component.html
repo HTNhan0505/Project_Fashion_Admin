@@ -28,7 +28,13 @@
     <div class="row">
       <mat-form-field>
         <mat-label>Gender</mat-label>
-        <mat-select formControlName="isMen">
+        <mat-select
+          (selectionChange)="setCategory($event)"
+          formControlName="gender"
+        >
+          <!-- <mat-option [value]="'MEN'"> Nam </mat-option>
+          <mat-option [value]="'WOMEN'"> Nữ </mat-option>
+          <mat-option [value]="'UNISEX'"> Cả hai </mat-option> -->
           <mat-option [value]="true"> Nam </mat-option>
           <mat-option [value]="false"> Nữ </mat-option>
           <mat-option [value]="-1"> Cả hai </mat-option>
@@ -40,7 +46,7 @@
       <mat-form-field>
         <mat-label>Categories</mat-label>
         <mat-select formControlName="categoryID">
-          <mat-option *ngFor="let value of category" [value]="value.id">
+          <mat-option *ngFor="let value of category" [value]="value.categoryId">
             {{ value.name }}
           </mat-option>
         </mat-select>
@@ -109,7 +115,6 @@
           >
             <nz-list-item class="product__item">
               <img
-                *ngIf="item.src !== ''"
                 nz-image
                 width="100%"
                 height="100%"
@@ -130,8 +135,15 @@
     <button mat-raised-button type="button" [mat-dialog-close]="false">
       Cancel
     </button>
+
     <button mat-raised-button color="primary" type="submit">
-      {{ data ? "Update" : "Save" }}
+      <mat-progress-spinner
+        style="width: 21px; height: 21px"
+        color="accent"
+        mode="indeterminate"
+        *ngIf="isLoading"
+      ></mat-progress-spinner>
+      {{ isLoading ? "" : "Save" }}
     </button>
   </div>
 </form>

@@ -15,28 +15,7 @@ export class AddCategoryComponent implements OnInit {
   empForm: FormGroup;
   isErrorFormat = false;
   isGender: any;
-  category: any = [
-    {
-      id: '1',
-      name: 'Áo thun',
-      detail: ''
-    },
-    {
-      id: '2',
-      name: 'Áo khoác',
-      detail: ''
-    },
-    {
-      id: '3',
-      name: 'Quần ngắn',
-      detail: ''
-    },
-    {
-      id: '4',
-      name: 'Quần dài',
-      detail: ''
-    }
-  ]
+  isLoading = false
 
   constructor(
     private _fb: FormBuilder,
@@ -55,51 +34,34 @@ export class AddCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isErrorFormat = false;
-
     this.empForm.patchValue(this.data);
   }
-
-  setPrice(value: any) {
-    if (typeof value !== 'number') {
-      let formattedNumber = value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      this.empForm.value['price'] = formattedNumber
-    }
-  }
-
   checkFormatAdmin() {
     if (
-      this.empForm.controls['productName']['value'] == '' ||
-      this.empForm.controls['detail']['value'] == '' ||
-      this.empForm.controls['price']['value'] == '' ||
-      this.empForm.controls['quantity']['value'] == '' ||
-      this.empForm.controls['isMen']['value'] == '' ||
-      this.empForm.controls['categoryId']['value'] == ''
+      this.empForm.value['name'] === '' ||
+      this.empForm.value['detail'] === '' ||
+      this.empForm.value['isMen'] === ''
     ) {
       this.isErrorFormat = true;
     } else {
       this.isErrorFormat = false;
     }
   }
+
   onFormSubmit() {
     this.checkFormatAdmin();
 
-
-    if (this.isErrorFormat == true) {
+    if (this.empForm.invalid) {
       this._coreService.openSnackBar('Fields can not empty');
     } else {
-      this.empForm.value['price'] = +this.empForm.value['price']
-      if (this.empForm.controls['isMen']['value'] == '-1') {
-        delete this.empForm.value['isMen']
-      }
-      this._proService.addProduct(this.empForm.value).subscribe({
+      this._proService.addCategory(this.empForm.value).subscribe({
         next: (val: any) => {
-          this._coreService.openSnackBar('Product added successfully');
+          this._coreService.openSnackBar('Category added successfully');
           this._dialogRef.close(true);
         },
 
         error: (err: any) => {
-          this._coreService.openSnackBar('Add product error');
+          this._coreService.openSnackBar('Add Category error');
 
           console.error(err);
         },
