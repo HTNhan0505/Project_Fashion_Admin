@@ -31,6 +31,7 @@
     </button>
   </mat-toolbar>
 </p>
+<!-- Product -->
 <div *ngIf="nameRender == 'Category'" class="main-body">
   <h1>Product</h1>
   <mat-form-field>
@@ -46,7 +47,7 @@
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- STT -->
-      <ng-container matColumnDef="Product_ID">
+      <ng-container matColumnDef="productId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>STT</th>
         <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
       </ng-container>
@@ -71,6 +72,11 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Name</th>
         <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
       </ng-container>
+      <!-- Gender -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+        <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
+      </ng-container>
       <!-- Product Detail -->
       <ng-container matColumnDef="detail">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Detail</th>
@@ -94,6 +100,7 @@
         <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
       </ng-container>
 
+      <!-- Action -->
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
         <td mat-cell *matCellDef="let row">
@@ -104,7 +111,7 @@
             <button
               mat-icon-button
               color="warn"
-              (click)="deleteProduct(row.Product_ID)"
+              (click)="deleteProduct(row.productId)"
             >
               <mat-icon>delete</mat-icon>
             </button>
@@ -119,11 +126,40 @@
         <td class="mat-cell" colspan="4">No data matching</td>
       </tr>
     </table>
-
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Select page of users"
-    ></mat-paginator>
+    <div class="d-flex justify-content-end">
+      <button
+        (click)="previousPage()"
+        [disabled]="pageNumber === 0"
+        mat-raised-button
+        color="primary"
+        class="m-r-20"
+      >
+        <mat-progress-spinner
+          style="width: 21px; height: 21px"
+          color="accent"
+          mode="indeterminate"
+          *ngIf="isLoading"
+        ></mat-progress-spinner>
+        {{ isLoading ? "" : "Previous" }}
+      </button>
+      <button
+        [disabled]="pageNumber + 1 === total"
+        (click)="nextPage()"
+        mat-raised-button
+        color="primary"
+      >
+        <mat-progress-spinner
+          style="width: 21px; height: 21px"
+          color="accent"
+          mode="indeterminate"
+          *ngIf="isLoading"
+        ></mat-progress-spinner>
+        {{ isLoading ? "" : "Next" }}
+      </button>
+    </div>
+    <div>
+      <span>{{ pageNumber + 1 }} </span>of <span>{{ total }}</span>
+    </div>
   </div>
 </div>
 <!-- Category -->
@@ -157,9 +193,9 @@
         <td mat-cell *matCellDef="let row">{{ row.detail }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="isMen">
+      <ng-container matColumnDef="gender">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
-        <td mat-cell *matCellDef="let row">{{ row.isMen }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
       </ng-container>
 
       <ng-container matColumnDef="action">
@@ -172,13 +208,6 @@
               (click)="openCategoryEditForm(row)"
             >
               <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="deleteProduct(row.categoryId)"
-            >
-              <mat-icon>delete</mat-icon>
             </button>
           </div>
         </td>

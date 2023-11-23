@@ -5,6 +5,7 @@ import { CoreService } from 'src/app/service/core.service';
 import { ProductService } from 'src/app/service/product.service';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EventEmitterService } from 'src/app/service/event-emitter.service';
 
 @Component({
   selector: 'app-add-product',
@@ -30,8 +31,10 @@ export class AddProductComponent {
     private _coreService: CoreService,
     public snackBar: MatSnackBar,
     public http: HttpClient,
+    private EventEmitterService: EventEmitterService
   ) {
     this.empForm = this._fb.group({
+      ID: '',
       productName: '',
       detail: '',
       price: '',
@@ -43,10 +46,10 @@ export class AddProductComponent {
   }
 
   ngOnInit(): void {
-
     this.empForm.patchValue(this.data);
     if (this.data !== null) {
       this.isErrorFormat = false
+      this.getCategorytlistByGender(this.data.gender)
       for (let i = 0; i < this.data.listImage.length; i++) {
         let obj = { 'src': "" }
         obj.src = this.data.listImage[i]
@@ -91,9 +94,8 @@ export class AddProductComponent {
       next: (res) => {
 
         this.category = res.data.filter(function (e: any) {
-          return e.isMen === value;
+          return e.gender === value;
         });
-
 
       },
       error: console.log,
@@ -110,13 +112,12 @@ export class AddProductComponent {
   // Check format form để trả về true false
   checkFormatAdmin() {
     if (
-      this.empForm.value['productName'] === '' ||
-      this.empForm.value['detail'] === '' ||
-      this.empForm.value['price'] === '' ||
-      this.empForm.value['quantity'] === '' ||
-      this.empForm.value['gender'] === '' ||
-      this.empForm.value['categoryID'] === '' ||
-      this.listFile.length === 0
+      this.empForm.value['productName'] == '' ||
+      this.empForm.value['detail'] == '' ||
+      this.empForm.value['price'] == '' ||
+      this.empForm.value['quantity'] == '' ||
+      this.empForm.value['gender'] == '' ||
+      this.empForm.value['categoryID'] == ''
     ) {
       this.isErrorFormat = true;
     } else {
@@ -125,6 +126,7 @@ export class AddProductComponent {
   }
   // Hàm xử lý khi submit
   onFormSubmit() {
+    this.checkFormatAdmin()
     if (this.data) {
       if (this.empForm.invalid) {
         this._coreService.openSnackBar('All update fields can not empty ');
@@ -132,10 +134,10 @@ export class AddProductComponent {
         this.isLoading = true
         this.empForm.value['price'] = parseInt(this.empForm.value['price'].split(".").join(""));
         const payload = new URLSearchParams({
-          productId: this.data.Product_ID
+          productId: this.data.productId
         })
         this._proService
-          .updateProduct(payload, this.empForm.value)
+          .updateProduct(this.data.productId, this.empForm.value)
           .subscribe({
             next: (val: any) => {
               this._coreService.openSnackBar('Product update successfully');
@@ -143,7 +145,8 @@ export class AddProductComponent {
               this.isLoading = false
             },
             error: (err: any) => {
-              this._coreService.openSnackBar('Add product error');
+              this._coreService.openSnackBar('Product update error');
+              this.isLoading = false
 
               console.error(err);
             },
@@ -151,7 +154,8 @@ export class AddProductComponent {
 
       }
     } else {
-      if (this.empForm.invalid) {
+      if (this.isErrorFormat === true) {
+        console.log(this.empForm.value)
         this._coreService.openSnackBar('All add fields can not empty');
       } else {
         this.isLoading = true
@@ -160,11 +164,13 @@ export class AddProductComponent {
           next: (val: any) => {
             this._coreService.openSnackBar('Product added successfully');
             this._dialogRef.close(true);
+            this.EventEmitterService.sendClickEvent()
             this.isLoading = false
           },
 
           error: (err: any) => {
             this._coreService.openSnackBar('Add product error');
+            this.isLoading = false
 
             console.error(err);
           },

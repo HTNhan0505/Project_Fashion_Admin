@@ -8,21 +8,24 @@ import { AddCategoryComponent } from 'src/app/components/add-category/add-catego
 import { AddProductComponent } from 'src/app/components/add-product/add-product.component';
 import { CoreService } from 'src/app/service/core.service';
 import { ProductService } from 'src/app/service/product.service';
-
-
+import { EventEmitterService } from 'src/app/service/event-emitter.service';
+import { Subscription } from 'rxjs'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  clickEventSubscription: Subscription;
+  updateCategory: Subscription;
   displayedColumns: string[] = [
-    'Product_ID',
+    'productId',
     'listImage',
     'productName',
     'detail',
     'price',
     'quantity',
+    'gender',
     'categoryName',
     'action'
   ];
@@ -30,12 +33,16 @@ export class HomeComponent implements OnInit {
     'categoryId',
     'name',
     'detail',
-    'isMen',
+    'gender',
     'action'
   ];
   nameRender: any
   dataSource!: MatTableDataSource<any>;
   dataSource2!: MatTableDataSource<any>;
+  pageNumber = 0;
+  pageSize = 5; // Số sản phẩm hiển thị trên mỗi trang
+  total: number = 0
+  isLoading = false
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -46,11 +53,19 @@ export class HomeComponent implements OnInit {
     private route: Router,
     private _proService: ProductService,
     private _coreService: CoreService,
-  ) { }
+    private EventEmitterService: EventEmitterService
+  ) {
+    this.clickEventSubscription = this.EventEmitterService.getClickEvent().subscribe(() => {
+      this.getProductList();
+    })
+    this.updateCategory = this.EventEmitterService.getClickEvent().subscribe(() => {
+      this.getCategoryist();
+    })
+  }
 
   ngOnInit() {
     this.nameRender = 'Category'
-    this.getProductist();
+    this.getProductList();
   }
   openAddEditEmpForm(Component: string) {
     if (!this.product.getToken()) {
@@ -70,27 +85,45 @@ export class HomeComponent implements OnInit {
 
   }
   // get product
-  getProductist() {
-    this._proService.getProductList().subscribe({
+  getProductList() {
+    console.log("Get")
+    this._proService.getProductList(this.pageNumber, this.pageSize).subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        this.total = Math.ceil(res.total / this.pageSize)
+        this.isLoading = false
       },
       error: console.log,
     });
 
   }
-  // get product
   getCategoryist() {
     this._proService.getCategoryList().subscribe({
       next: (res) => {
         this.dataSource2 = new MatTableDataSource(res.data);
         this.dataSource2.sort = this.sort;
         this.dataSource2.paginator = this.paginator;
+        console.log(res.data)
       },
       error: console.log,
     });
+  }
+  nextPage() {
+    this.isLoading = true
+    if (this.pageNumber < this.total) {
+      this.pageNumber++;
+      this.getProductList();
+    }
+
+  }
+  previousPage() {
+    this.isLoading = true
+
+    if (this.pageNumber > 0) {
+      this.pageNumber = 0;
+      this.getProductList();
+    }
   }
   // Log out
   logOutAccount() {
@@ -121,7 +154,7 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getProductist();
+          this.getProductList();
         }
       },
     });
@@ -143,7 +176,7 @@ export class HomeComponent implements OnInit {
     this._proService.deleteProduct(Product_ID).subscribe({
       next: (res) => {
         this._coreService.openSnackBar('Employee deleted!', 'done');
-        this.getProductist();
+        this.getProductList();
       },
       error: console.log,
     });
@@ -158,7 +191,8 @@ export class HomeComponent implements OnInit {
 
     } else {
       this.nameRender = 'Category'
-      this.getProductist()
+      this.getProductList()
     }
   }
+
 }

@@ -27,10 +27,10 @@
     <div class="row">
       <mat-form-field>
         <mat-label>Gender</mat-label>
-        <mat-select formControlName="isMen">
-          <mat-option [value]="true"> Nam </mat-option>
-          <mat-option [value]="false"> Nữ </mat-option>
-          <mat-option [value]="-1"> Cả hai </mat-option>
+        <mat-select formControlName="gender">
+          <mat-option [value]="'Men'"> Nam </mat-option>
+          <mat-option [value]="'Women'"> Nữ </mat-option>
+          <mat-option [value]="'Both'"> Cả hai </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
