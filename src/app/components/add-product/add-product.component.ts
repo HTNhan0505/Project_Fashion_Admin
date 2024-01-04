@@ -132,7 +132,7 @@ export class AddProductComponent {
         this._coreService.openSnackBar('All update fields can not empty ');
       } else {
         this.isLoading = true
-        this.empForm.value['price'] = parseInt(this.empForm.value['price'].split(".").join(""));
+        // this.empForm.value['price'] = parseInt(this.empForm.value['price'].split(".").join(""));
         const payload = new URLSearchParams({
           productId: this.data.productId
         })

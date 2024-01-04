@@ -33,12 +33,14 @@ export class ProductService {
   getCategoryList(): Observable<any> {
     return this._http.get('http://localhost:3000/admin/get-category/list');
   }
-
+  getOrderList(): Observable<any> {
+    return this._http.get('http://localhost:3000/admin/orders/get-all-order');
+  }
   updateProduct(id: any, data: any): Observable<any> {
     return this._http.put(`http://localhost:3000/admin/product/update/${id}`, data);
   }
   updateCategory(id: any, data: any): Observable<any> {
-    return this._http.put(`http://localhost:3000/admin/updatecategory/${id}`, data);
+    return this._http.put(`http://localhost:3000/admin/update-category/${id}`, data);
   }
 
 }

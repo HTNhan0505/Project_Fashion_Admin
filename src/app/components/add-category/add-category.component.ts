@@ -38,7 +38,6 @@ export class AddCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.empForm.patchValue(this.data);
-    console.log(this.data)
   }
   checkFormatAdmin() {
     if (
@@ -57,7 +56,6 @@ export class AddCategoryComponent implements OnInit {
       if (this.empForm.invalid) {
         this._coreService.openSnackBar('Fields can not empty');
       } else {
-        console.log(this.empForm.value)
         this._proService
           .updateCategory(this.data.categoryId, this.empForm.value)
           .subscribe({

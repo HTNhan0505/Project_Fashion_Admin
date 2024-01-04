@@ -23,6 +23,7 @@ import { MaterialModule } from './material.module';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AuthInterceptor } from './service/auth.interceptor';
 import { AddCategoryComponent } from './components/add-category/add-category.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 
 
@@ -35,7 +36,8 @@ registerLocaleData(en);
     LoginComponent,
     HomeComponent,
     AddProductComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

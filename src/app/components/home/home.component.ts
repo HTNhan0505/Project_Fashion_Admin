@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
   }
   // get product
   getProductList() {
-    console.log("Get")
+
     this._proService.getProductList(this.pageNumber, this.pageSize).subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res.data);
@@ -94,19 +94,21 @@ export class HomeComponent implements OnInit {
         this.total = Math.ceil(res.total / this.pageSize)
         this.isLoading = false
       },
-      error: console.log,
+
     });
 
   }
+
+
   getCategoryist() {
     this._proService.getCategoryList().subscribe({
       next: (res) => {
         this.dataSource2 = new MatTableDataSource(res.data);
         this.dataSource2.sort = this.sort;
         this.dataSource2.paginator = this.paginator;
-        console.log(res.data)
+
       },
-      error: console.log,
+
     });
   }
   nextPage() {
@@ -178,12 +180,10 @@ export class HomeComponent implements OnInit {
         this._coreService.openSnackBar('Employee deleted!', 'done');
         this.getProductList();
       },
-      error: console.log,
+
     });
   }
-  deleteCategory(categoryId: any) {
-    console.log('delete category', categoryId)
-  }
+
   toggleTypeRender() {
     if (this.nameRender == 'Category') {
       this.nameRender = 'Product'
@@ -193,6 +193,10 @@ export class HomeComponent implements OnInit {
       this.nameRender = 'Category'
       this.getProductList()
     }
+  }
+  getOrders() {
+    this.route.navigate(['orders'])
+    // this.getOrderList()
   }
 
 }
