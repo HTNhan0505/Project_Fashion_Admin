@@ -30,6 +30,7 @@ export class OrdersComponent {
   pageSize = 5; // Số sản phẩm hiển thị trên mỗi trang
   total: number = 0
   isLoading = false
+  dateString: any
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -40,7 +41,7 @@ export class OrdersComponent {
     private route: Router,
     private _proService: ProductService,
     private _coreService: CoreService,
-    private EventEmitterService: EventEmitterService
+    private EventEmitterService: EventEmitterService,
   ) {
 
   }

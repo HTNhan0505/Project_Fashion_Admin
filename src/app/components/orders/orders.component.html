@@ -48,7 +48,7 @@
       <ng-container matColumnDef="updtaed_at">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Date order</th>
         <td mat-cell *matCellDef="let row" style="cursor: pointer">
-          {{ row.updtaed_at }}
+          {{ row.created_at | date }}
         </td>
       </ng-container>
 

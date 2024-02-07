@@ -12,8 +12,10 @@ export class LoginComponent {
   validateForm!: FormGroup
   constructor(private fb: FormBuilder, private http: HttpClient, private route: Router) { }
   errorText: any = ''
+  isLoading = false
 
   ngOnInit(): void {
+    this.isLoading = false
     this.validateForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -23,11 +25,15 @@ export class LoginComponent {
     localStorage.removeItem("refeshToken");
   }
   submitForm(): void {
+    this.isLoading = true
     if (this.validateForm.invalid) {
       this.errorText = "Username or password not empty"
       setTimeout(() => {
         this.errorText = ""
-      }, 3000)
+        this.isLoading = false
+
+      }, 2000)
+
       return;
     }
 
@@ -37,7 +43,7 @@ export class LoginComponent {
     };
 
     // Gửi yêu cầu đăng nhập tới API
-    this.http.post('http://localhost:3000/users/login', loginData).subscribe(
+    this.http.post('https://blawol.onrender.com/users/login', loginData).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.token)
         localStorage.setItem('refeshToken', response.refresh_token)
@@ -49,9 +55,17 @@ export class LoginComponent {
           this.errorText = "login or password incorrect"
           setTimeout(() => {
             this.errorText = ""
-          }, 3000)
+
+          }, 2000)
+
+        } else {
+          this.errorText = "Have error please try again"
+          setTimeout(() => {
+            this.errorText = ""
+          }, 2000)
 
         }
+        this.isLoading = false
       }
     );
   }

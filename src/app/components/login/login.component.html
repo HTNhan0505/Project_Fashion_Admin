@@ -1,23 +1,56 @@
-<div class="bg">
-</div>
+<div class="bg"></div>
 <div class="login">
-    <h1 class="login-title">Login with admin</h1>
-    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-        <nz-form-item>
-            <nz-form-control nzErrorTip="Please input your username@gmail.com!">
-                <nz-input-group class="h-50-px" nzPrefixIcon="user">
-                    <input type="text" nz-input formControlName="email" placeholder="Username" />
-                </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-control nzErrorTip="Please input your Password!">
-                <nz-input-group class="h-50-px" nzPrefixIcon="lock">
-                    <input type="password" nz-input formControlName="password" placeholder="Password" />
-                </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-        <span class="error">{{errorText}}</span>
-        <button nz-button class="login-form-button login-form-margin h-50-px" [nzType]="'primary'">Log in</button>
-    </form>
+  <h1 class="login-title">Login with admin</h1>
+  <form
+    nz-form
+    [formGroup]="validateForm"
+    class="login-form"
+    (ngSubmit)="submitForm()"
+  >
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your username@gmail.com!">
+        <nz-input-group class="h-50-px" nzPrefixIcon="user">
+          <input
+            type="text"
+            nz-input
+            formControlName="email"
+            placeholder="Username"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your Password!">
+        <nz-input-group class="h-50-px" nzPrefixIcon="lock">
+          <input
+            type="password"
+            nz-input
+            formControlName="password"
+            placeholder="Password"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <span class="error">{{ errorText }}</span>
+    <button
+      nz-button
+      class="login-form-button login-form-margin h-50-px"
+      [nzType]="'primary'"
+    >
+      <mat-progress-spinner
+        style="
+          width: 21px;
+          height: 21px;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        "
+        color="accent"
+        mode="indeterminate"
+        *ngIf="isLoading"
+      ></mat-progress-spinner>
+      {{ isLoading ? "" : "Log in" }}
+    </button>
+  </form>
 </div>
