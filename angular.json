@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/",
+            "outputPath": "dist/admin-page",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -46,8 +46,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "12mb",
-                  "maximumError": "12mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
