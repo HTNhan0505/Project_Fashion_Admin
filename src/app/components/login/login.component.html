@@ -35,6 +35,7 @@
     <button
       nz-button
       class="login-form-button login-form-margin h-50-px"
+      [disabled]="isLoading"
       [nzType]="'primary'"
     >
       <mat-progress-spinner
