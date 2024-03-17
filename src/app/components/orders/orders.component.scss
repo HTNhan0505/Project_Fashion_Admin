@@ -12,7 +12,9 @@
         width: 100%;
     }
 }
-
+tr:hover {
+    background-color: #ccc;
+}
 .action {
     display: flex;
     gap: 5px;
@@ -26,4 +28,26 @@
 }
 .CANCELED {
     color: red;
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+.mr-5 {
+    margin-right: 20px;
+}
+.main-body {
+    padding-top: 20px;
+    margin: 0 auto;
+    max-width: 1348px;
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.action {
+    display: flex;
+    gap: 5px;
+}
+.m-r-20 {
+    margin-right: 20px;
 }

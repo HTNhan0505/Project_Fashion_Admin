@@ -10,7 +10,10 @@ export class ProductService {
   private baseUrl = 'https://blawol.onrender.com/admin/product/list'
   constructor(private _http: HttpClient) { }
   public getToken() {
-    return localStorage.getItem('token');
+    if (localStorage.getItem('token')) {
+      return localStorage.getItem('token')
+    }
+    return;
   }
   public getRefeshToken() {
     return localStorage.getItem('refeshToken');
@@ -35,6 +38,10 @@ export class ProductService {
   }
   getOrderList(): Observable<any> {
     return this._http.get('https://blawol.onrender.com/admin/orders/get-all-order');
+  }
+  getSingleOrder(id: any) {
+    const url = `https://blawol.onrender.com/admin/order/${id}`;
+    return this._http.get<any>(url);
   }
   updateProduct(id: any, data: any): Observable<any> {
     return this._http.put(`https://blawol.onrender.com/admin/product/update/${id}`, data);
