@@ -25,6 +25,7 @@ import { AuthInterceptor } from './service/auth.interceptor';
 import { AddCategoryComponent } from './components/add-category/add-category.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { SingleOrderComponent } from './components/single-order/single-order.component';
+import { DeliveryComponent } from './components/delivery/delivery.component';
 
 
 
@@ -39,7 +40,8 @@ registerLocaleData(en);
     AddProductComponent,
     AddCategoryComponent,
     OrdersComponent,
-    SingleOrderComponent
+    SingleOrderComponent,
+    DeliveryComponent
   ],
   imports: [
     BrowserModule,

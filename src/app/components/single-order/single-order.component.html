@@ -2,6 +2,29 @@
   <div class="header-order">
     <button color="primary" mat-raised-button routerLink="/orders">Back</button>
 
+    <button
+      [disabled]="status"
+      color="primary"
+      mat-raised-button
+      (click)="navigateDelivery()"
+    >
+      Delivery
+    </button>
+    <button
+      [disabled]="status2"
+      color="accent"
+      mat-raised-button
+      (click)="confirmOrder()"
+    >
+      <mat-progress-spinner
+        style="width: 21px; height: 21px"
+        color="progress"
+        mode="indeterminate"
+        *ngIf="isLoading"
+      ></mat-progress-spinner>
+      {{ isLoading ? "" : "Confirmed" }}
+    </button>
+
     <h1>Total : {{ totalPrice }} VND</h1>
   </div>
   <mat-form-field>

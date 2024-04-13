@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
             if (err.status === 401 && !this.refresh) {
                 this.refresh = true;
 
-                return this.http.post('https://blawol.onrender.com/users/get-token', { refresh_token: this.product.getRefeshToken() }, { withCredentials: true }).pipe(
+                return this.http.post('http://localhost:3000/users/get-token', { refresh_token: this.product.getRefeshToken() }, { withCredentials: true }).pipe(
                     switchMap((res: any) => {
                         localStorage.setItem('token', res.token)
 

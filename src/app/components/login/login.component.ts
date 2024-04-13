@@ -43,7 +43,7 @@ export class LoginComponent {
     };
 
     // Gửi yêu cầu đăng nhập tới API
-    this.http.post('https://blawol.onrender.com/users/login', loginData).subscribe(
+    this.http.post('http://localhost:3000/users/login', loginData).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.token)
         localStorage.setItem('refeshToken', response.refresh_token)

@@ -1,0 +1,59 @@
+<div class="wrap">
+  <div class="card">
+    <div class="title">Purchase Reciept</div>
+    <div class="info">
+      <div class="row">
+        <div class="col-7">
+          <span id="heading">Date</span><br />
+          <span id="details">{{ date | date }}</span>
+        </div>
+        <div class="col-5 pull-right">
+          <span id="heading">Location.</span><br />
+          <span id="details">{{ location }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="tracking">
+      <div class="title">Tracking Order</div>
+    </div>
+    <div class="progress-track">
+      <ul id="progressbar">
+        <li class="step0 active" id="step1">Ordered</li>
+        <li
+          [ngClass]="{
+            active:
+              status == 'WAITING' ||
+              status == 'SHIPPING' ||
+              status == 'DELIVERED'
+          }"
+          class="step0 text-center"
+          id="step2"
+        >
+          Waiting
+        </li>
+        <li
+          [ngClass]="{ active: status == 'SHIPPING' || status == 'DELIVERED' }"
+          class="step0 text-right"
+          id="step3"
+        >
+          Shipping
+        </li>
+        <li
+          [ngClass]="{ active: status == 'DELIVERED' }"
+          class="step0 text-right"
+          id="step4"
+        >
+          Delivered
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <div class="row">
+        <div class="col-10" style="font-size: 16px">
+          Estimated delivery date {{ estimate_date | date }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
