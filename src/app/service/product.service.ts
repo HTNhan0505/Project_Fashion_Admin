@@ -59,5 +59,22 @@ export class ProductService {
 
     return this._http.put(apiUrl, body);
   }
+  reportInfo() {
+    const url = `http://localhost:3000/admin/report`;
+    return this._http.get<any>(url);
+  }
 
+  userList() {
+    return this._http.get('http://localhost:3000/admin/user/list');
+  }
+
+  getSingleUser(id: any) {
+    const url = `http://localhost:3000/admin/user/get/${id}`;
+    return this._http.get<any>(url);
+  }
+
+  updateUser(id: any, data: any): Observable<any> {
+    return this._http.put(`http://localhost:3000/admin/user/${id}`, data);
+  }
 }
+

@@ -198,5 +198,8 @@ export class HomeComponent implements OnInit {
     this.route.navigate(['orders'])
     // this.getOrderList()
   }
+  getAmount() {
+    this.route.navigate(['amount'])
+  }
 
 }

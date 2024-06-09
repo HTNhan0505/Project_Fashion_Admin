@@ -1,0 +1,57 @@
+<div mat-dialog-title>
+  <h1>Thông tin người dùng</h1>
+</div>
+<form [formGroup]="empForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <!-- Product Name & detail -->
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Họ</mat-label>
+        <input matInput type="text" formControlName="first_name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Tên</mat-label>
+        <textarea matInput formControlName="last_name"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="text"
+          class="example-right-align"
+          formControlName="email"
+        />
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>Số điện thoại</mat-label>
+        <input
+          matInput
+          type="number"
+          class="example-right-align"
+          placeholder="Nhập số"
+          formControlName="phone"
+        />
+        <span matTextPrefix>&nbsp;</span>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">
+      Hủy
+    </button>
+
+    <button mat-raised-button color="primary" type="submit">
+      <mat-progress-spinner
+        style="width: 21px; height: 21px"
+        color="accent"
+        mode="indeterminate"
+        *ngIf="isLoading"
+      ></mat-progress-spinner>
+      {{ isLoading ? "" : "Lưu" }}
+    </button>
+  </div>
+</form>

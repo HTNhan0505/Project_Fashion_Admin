@@ -1,15 +1,27 @@
-<div class="main-body">
-  <div class="header-order">
-    <button color="primary" mat-raised-button routerLink="/orders">Back</button>
+<p>
+  <mat-toolbar color="primary">
+    <span>Admin manage</span>
 
+    <span class="example-spacer"></span>
     <button
+      style="margin-right: 20px"
       [disabled]="status"
-      color="primary"
       mat-raised-button
       (click)="navigateDelivery()"
     >
       Delivery
     </button>
+
+    <button class="mr-5" mat-raised-button routerLink="/orders">Back</button>
+
+    <button mat-icon-button class="example-icon supervised_user_circle-icon">
+      <mat-icon>supervised_user_circle</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+
+<div class="main-body">
+  <div class="header-order">
     <button
       [disabled]="status2"
       color="accent"

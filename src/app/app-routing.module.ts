@@ -5,6 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { SingleOrderComponent } from './components/single-order/single-order.component';
 import { DeliveryComponent } from './components/delivery/delivery.component';
+import { AmountComponent } from './components/amount/amount.component';
+import { UserComponent } from './components/user/user.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -19,7 +21,9 @@ const routes: Routes = [
     component: DeliveryComponent,
 
   },
-  { path: 'orders', component: OrdersComponent }
+  { path: 'orders', component: OrdersComponent },
+  { path: 'amount', component: AmountComponent },
+  { path: 'users', component: UserComponent }
 ];
 
 @NgModule({

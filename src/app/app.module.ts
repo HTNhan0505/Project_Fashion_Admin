@@ -26,7 +26,9 @@ import { AddCategoryComponent } from './components/add-category/add-category.com
 import { OrdersComponent } from './components/orders/orders.component';
 import { SingleOrderComponent } from './components/single-order/single-order.component';
 import { DeliveryComponent } from './components/delivery/delivery.component';
-
+import { AmountComponent } from './components/amount/amount.component';
+import { UserComponent } from './components/user/user.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
 
@@ -41,7 +43,11 @@ registerLocaleData(en);
     AddCategoryComponent,
     OrdersComponent,
     SingleOrderComponent,
-    DeliveryComponent
+    DeliveryComponent,
+    AmountComponent,
+    UserComponent,
+    EditUserComponent
+
   ],
   imports: [
     BrowserModule,
@@ -53,7 +59,6 @@ registerLocaleData(en);
     IconsProviderModule,
     AntdModuleModule,
     MaterialModule,
-
   ],
   providers: [
     {

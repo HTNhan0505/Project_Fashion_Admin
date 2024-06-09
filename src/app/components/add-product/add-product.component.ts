@@ -96,7 +96,6 @@ export class AddProductComponent {
         this.category = res.data.filter(function (e: any) {
           return e.gender === value;
         });
-
       },
       error: console.log,
     });
@@ -155,7 +154,7 @@ export class AddProductComponent {
       }
     } else {
       if (this.isErrorFormat === true) {
-        console.log(this.empForm.value)
+
         this._coreService.openSnackBar('All add fields can not empty');
       } else {
         this.isLoading = true

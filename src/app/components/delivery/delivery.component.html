@@ -24,7 +24,7 @@
             active:
               status == 'WAITING' ||
               status == 'SHIPPING' ||
-              status == 'DELIVERED'
+              status == 'RECEIVED'
           }"
           class="step0 text-center"
           id="step2"
@@ -32,18 +32,18 @@
           Waiting
         </li>
         <li
-          [ngClass]="{ active: status == 'SHIPPING' || status == 'DELIVERED' }"
+          [ngClass]="{ active: status == 'SHIPPING' || status == 'RECEIVED' }"
           class="step0 text-right"
           id="step3"
         >
           Shipping
         </li>
         <li
-          [ngClass]="{ active: status == 'DELIVERED' }"
+          [ngClass]="{ active: status == 'RECEIVED' }"
           class="step0 text-right"
           id="step4"
         >
-          Delivered
+          Recived
         </li>
       </ul>
     </div>
