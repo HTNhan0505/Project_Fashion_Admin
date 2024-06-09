@@ -23,10 +23,21 @@ export class UserComponent {
   displayedColumns2: string[] = [
     'user_id',
     'name',
+    'created_at',
+    'fullAddress',
     'email',
     'phone',
     'action'
   ];
+
+
+  selectedProvince: any;
+  selectedCity: any;
+  selectedWard: any;
+
+  province = '';
+  district = '';
+  ward = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -50,7 +61,6 @@ export class UserComponent {
   getUserList() {
     this.product.userList().subscribe({
       next: (res: any) => {
-        console.log("********Data", res.data)
         this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

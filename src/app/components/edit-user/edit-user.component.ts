@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CoreService } from 'src/app/service/core.service';
 import { ProductService } from 'src/app/service/product.service';
 import { EventEmitterService } from 'src/app/service/event-emitter.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-edit-user',
@@ -17,6 +18,18 @@ export class EditUserComponent {
   isLoading = false
   empForm: FormGroup;
   isErrorFormat = false;
+
+  province = '';
+  district = '';
+  ward = '';
+
+  selectedProvince: any;
+  selectedCity: any;
+  selectedWard: any;
+
+  provinces!: any[];
+  cities!: any[];
+  wards!: any[];
 
 
   constructor(
@@ -33,15 +46,33 @@ export class EditUserComponent {
       user_id: '',
       first_name: '',
       last_name: '',
+      street: '',
+      province: '',
+      district: '',
+      ward: '',
       email: '',
       phone: '',
+      isActive: Boolean
     });
   }
 
   ngOnInit(): void {
     this.empForm.patchValue(this.data);
+    console.log(this.data)
     if (this.data !== null) {
       this.isErrorFormat = false
+
+      this.selectedProvince = this.data.province
+      this.selectedCity = this.data.district
+      this.selectedWard = this.data.ward
+
+      this.getProvince()
+      this.getDistrict()
+      this.getWard()
+
+
+      this.setLocaleValue()
+
     }
   }
 
@@ -86,5 +117,55 @@ export class EditUserComponent {
 
   }
 
+  getProvince() {
+    this._proService.getProvinces().subscribe(
+      (data: any) => {
+        this.provinces = data.data;
+      },
+      (error) => { }
+    );
+  }
+  getDistrict() {
+    this._proService.getCities(parseInt(this.selectedProvince)).subscribe(
+      (data: any) => {
+        this.cities = data.data;
+      },
+      (error) => { }
+    );
+  }
+  getWard() {
+    this._proService.getWard(parseInt(this.selectedCity)).subscribe(
+      (data: any) => {
+        this.wards = data.data;
+      },
+      (error) => { }
+    );
+  }
 
+
+  onProvinceChange() {
+    this.province = this.selectedProvince;
+    this.setLocaleValue()
+    this.getDistrict()
+  }
+  onCityChange() {
+    this.district = this.selectedCity;
+    this.setLocaleValue()
+    this.getWard()
+  }
+
+  onWardChange() {
+    this.ward = this.selectedWard;
+    this.setLocaleValue()
+  }
+
+  setLocaleValue() {
+    this.empForm.value['province'] = this.selectedProvince
+    this.empForm.value['district'] = this.selectedCity
+    this.empForm.value['ward'] = this.selectedWard
+  }
+
+  onToggle(event: MatSlideToggleChange) {
+    this.empForm.value['isActive'] = event.checked;
+  }
 }

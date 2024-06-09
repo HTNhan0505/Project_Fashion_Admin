@@ -14,6 +14,56 @@
         <textarea matInput formControlName="last_name"></textarea>
       </mat-form-field>
     </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Tên đường</mat-label>
+        <input matInput type="text" formControlName="street" />
+      </mat-form-field>
+    </div>
+
+    <div class="row" style="padding: 12px">
+      <mat-label>Địa chỉ</mat-label>
+      <select
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="selectedProvince"
+        (change)="onProvinceChange()"
+        class="form-control"
+        name="province"
+      >
+        <option
+          *ngFor="let province of provinces"
+          [value]="province.ProvinceID"
+        >
+          {{ province.ProvinceName }}
+        </option>
+      </select>
+
+      <select
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="selectedCity"
+        class="form-control"
+        (change)="onCityChange()"
+        name="cities"
+      >
+        <option *ngFor="let city of cities" [value]="city.DistrictID">
+          {{ city.DistrictName }}
+        </option>
+      </select>
+
+      <select
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="selectedWard"
+        class="form-control"
+        name="wards"
+        (change)="onWardChange()"
+      >
+        <option *ngFor="let ward of wards" [value]="ward.WardCode">
+          {{ ward.WardName }}
+        </option>
+      </select>
+    </div>
+
     <div class="row">
       <mat-form-field floatLabel="always" appearance="outline">
         <mat-label>Email</mat-label>
@@ -36,6 +86,20 @@
         />
         <span matTextPrefix>&nbsp;</span>
       </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-slide-toggle
+        color="primary"
+        formControlName="isActive"
+        (change)="onToggle($event)"
+      >
+        {{
+          empForm.value["isActive"]
+            ? "Tài khoản đang hoạt động"
+            : "Tài khoản đã ngưng hoạt động"
+        }}
+      </mat-slide-toggle>
     </div>
   </div>
 

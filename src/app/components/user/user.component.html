@@ -27,8 +27,8 @@
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- STT -->
       <ng-container matColumnDef="user_id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>STT</th>
-        <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let row; let i = index">{{ row.user_id }}</td>
       </ng-container>
 
       <ng-container matColumnDef="name">
@@ -38,6 +38,18 @@
         <td mat-cell *matCellDef="let row">
           {{ row.first_name + " " + row.last_name }}
         </td>
+      </ng-container>
+
+      <ng-container matColumnDef="created_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.created_at | date : "dd-MM-yyyy" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fullAddress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Địa chỉ</th>
+        <td mat-cell *matCellDef="let row">{{ row.fullAddress }}</td>
       </ng-container>
 
       <ng-container matColumnDef="email">
